@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">AndroidComponents</string>
+    <string name="offer_string">50% off \n upto 100</string>
+    <string name="foodName">La Pino\'s Pizza</string>
+    <string name="rating">4.0</string>
+    <string name="priceOffer">200 for two</string>
+    <string name="extendedOffer">wow! you\'ve got new deal 200 off for order above 900 above</string>
+</resources>

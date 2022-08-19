@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin_fifteen">15dp</dimen>
+    <dimen name="activityPadding">16dp</dimen>
+    <dimen name="placeholderImage">60dp</dimen>
+    <dimen name="placeholderTextHeight">8dp</dimen>
+    <dimen name="padding_10">10dp</dimen>
+    <dimen name="margin_five">5dp</dimen>
+    <dimen name="size_12">12dp</dimen>
+    <dimen name="size_6">6dp</dimen>
+    <dimen name="size_180">180dp</dimen>
+    <dimen name="size_18">18sp</dimen>
+    <dimen name="size_8">8dp</dimen>
+    <dimen name="margin_6">6dp</dimen>
+    <dimen name="size12">12sp</dimen>
+    <dimen name="radius_12">12dp</dimen>
+    <dimen name="size_24">24dp</dimen>
+    <dimen name="size_20">20sp</dimen>
+    <dimen name="size_10">10sp</dimen>
+</resources>

@@ -1,11 +1,10 @@
 package com.example.androidcomponents.ui.adapter
 
-import android.content.Context
-import android.util.Log
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -57,27 +56,28 @@ class FoodListAdapter(private var list: MutableList<FoodListModel>?) :
 
     class MyVerticalViewHolder(var binding: RvItemFoodListBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: FoodListModel) {
+        fun bind(data: FoodListModel, listener: OnClickListener?) {
 
             binding.foodListBinding = data
             binding.apply {
                 foodImage.layoutParams.height = Dimension.convertDpToPixels(190f, root.context)
-//                foodDesc.text = data.foodDesc
-//                foodPrice.text = data.foodPrice
-//                foodRating.text = data.foodRating
-//                foodName.text = data.foodName
                 if (data.foodExtendedOffer.isEmpty()) {
                     foodExtendedOffer.visibility = View.GONE
                     seperator.visibility = View.GONE
                 } else {
                     foodExtendedOffer.visibility = View.VISIBLE
                     seperator.visibility = View.VISIBLE
-                  //  foodExtendedOffer.text = data.foodExtendedOffer
-                }
 
-//                foodOffer.text =
-//                    HtmlCompat.fromHtml(data.foodOffer, HtmlCompat.FROM_HTML_MODE_COMPACT)
-                Glide.with(root.context).asBitmap().load(data.foodImage).dontAnimate().into(foodImage)
+                }
+                Glide.with(root.context).asBitmap().load(data.foodImage).dontAnimate()
+                    .into(foodImage)
+            }
+            itemView.setOnClickListener {
+                listener?.onItemClickedWithImage(
+                    data.foodName,
+                    (binding.foodImage.drawable as BitmapDrawable).bitmap
+                )
+
             }
 
         }
@@ -179,11 +179,8 @@ class FoodListAdapter(private var list: MutableList<FoodListModel>?) :
         when (holder) {
             is MyHorizontalViewHolder -> holder.bind(imageList, listener)
             is MyVerticalViewHolder -> {
-                holder.bind(list?.get(position)!!)
-                holder.itemView.setOnClickListener {
-                    if (listener != null)
-                        listener!!.onItemClicked(list?.get(position)?.foodName)
-                }
+                holder.bind(list?.get(position)!!, listener)
+
             }
             is MyGridViewHolder -> holder.bind(horiZontalList, listener)
         }
@@ -199,7 +196,8 @@ class FoodListAdapter(private var list: MutableList<FoodListModel>?) :
     }
 
     interface OnClickListener :
-         SubAdapter.OnClickListener {
+        SubAdapter.OnClickListener {
         override fun onItemClicked(name: String?)
+        override fun onItemClickedWithImage(foodName: String, bitmap: Bitmap?)
     }
 }

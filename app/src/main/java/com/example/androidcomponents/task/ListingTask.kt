@@ -1,12 +1,10 @@
 package com.example.androidcomponents.task
 
 import android.content.Context
-import android.text.TextUtils
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.android.volley.*
 import com.android.volley.toolbox.Volley
-import com.example.androidcomponents.network.Network
 import com.example.androidcomponents.response.AppRequest
 import com.example.androidcomponents.response.ListingResponse
 import com.example.androidcomponents.utils.Links.DEFAULT_LIST_API

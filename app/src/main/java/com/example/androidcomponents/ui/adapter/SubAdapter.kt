@@ -1,7 +1,8 @@
 package com.example.androidcomponents.ui.adapter
 
 import android.content.Context
-import android.util.Log
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,7 +31,6 @@ class SubAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     val HORIZONTAL_SLIDER = 2
     val VERTICAL_SLIDER = 3
     private var layoutType: Int = 1
-  //  lateinit var context: Context
 
     constructor(list: MutableList<*>, layoutType: Int, context: Context) : this() {
         when (layoutType) {
@@ -39,7 +39,6 @@ class SubAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             VERTICAL_SLIDER -> verticalList.addAll(list as ArrayList<FoodListModel>)
         }
         this.layoutType = layoutType
-       // this.context = context
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -107,7 +106,7 @@ class SubAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     class GridViewHolder(val binding: RvItemGridViewBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: FoodGridListModel) {
+        fun bind(data: FoodGridListModel, listener: OnClickListener?) {
             //  val width = (Dimension.getDisplaySize(context).widthPixels * .16).toInt()
             val height = (Dimension.getDisplaySize(binding.root.context).heightPixels * .20).toInt()
 
@@ -117,13 +116,18 @@ class SubAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             binding.foodName.text = data.foodName
             Glide.with(binding.root.context).asBitmap().load(data.foodImage).into(binding.foodImage)
 
+            itemView.setOnClickListener {
+            if (listener != null)
+                listener!!.onItemClickedWithImage(data.foodName,(binding.foodImage.drawable as BitmapDrawable?)?.bitmap)
+            }
+
         }
 
     }
 
     class SliderViewHolder(var binding: RvItemImageListBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: FoodImageListModel) {
+        fun bind(data: FoodImageListModel, listener: OnClickListener?) {
             val width = (Dimension.getDisplaySize(binding.root.context).widthPixels * .20).toInt()
             val height = (Dimension.getDisplaySize(binding.root.context).heightPixels * .10).toInt()
 
@@ -131,6 +135,11 @@ class SubAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             binding.image.layoutParams.height = height
             Glide.with(binding.root.context).asBitmap().load(data.foodImage).into(binding.image)
             binding.name.text = data.foodName
+
+            itemView.setOnClickListener {
+                if (listener != null)
+                    listener!!.onItemClickedWithImage(data.foodName,(binding.image.drawable as BitmapDrawable?)?.bitmap)
+            }
         }
 
     }
@@ -138,20 +147,14 @@ class SubAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is GridViewHolder -> {
-                holder.bind(gridList[position])
-                holder.itemView.setOnClickListener {
-                    if (listener != null)
-                        listener!!.onItemClicked(gridList[position].foodName)
-                }
+                holder.bind(gridList[position],listener)
+
             }
             is SliderViewHolder -> {
-                holder.bind(horizontalList[position])
-                holder.itemView.setOnClickListener {
-                    if (listener != null)
-                        listener!!.onItemClicked(horizontalList[position].foodName)
-                }
+                holder.bind(horizontalList[position],listener)
+
             }
-            is ListViewHolder -> holder.bind(verticalList[position], layoutType)
+           // is ListViewHolder -> holder.bind(verticalList[position], layoutType)
         }
     }
 
@@ -164,11 +167,12 @@ class SubAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     }
 
-    fun setCLickListener(listener: OnClickListener) {
+    fun setCLickListener(listener: OnClickListener?) {
         this.listener = listener
     }
 
     interface OnClickListener {
         fun onItemClicked(name: String?)
+        fun onItemClickedWithImage(foodName: String, bitmap: Bitmap?)
     }
 }

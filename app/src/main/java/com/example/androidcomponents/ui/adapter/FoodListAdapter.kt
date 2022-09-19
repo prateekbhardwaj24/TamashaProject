@@ -5,10 +5,12 @@ import android.graphics.drawable.BitmapDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.androidcomponents.R
 import com.example.androidcomponents.database.model.FoodGridListModel
 import com.example.androidcomponents.database.model.FoodImageListModel
 import com.example.androidcomponents.database.model.FoodListModel
@@ -58,6 +60,27 @@ class FoodListAdapter(private var list: MutableList<FoodListModel>?) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: FoodListModel, listener: OnClickListener?) {
 
+
+            val constraintSet = ConstraintSet()
+            val constraintLayout = binding.parent
+            constraintSet.clone(constraintLayout)
+            constraintSet.connect(
+                R.id.food_name,
+                ConstraintSet.END,
+                R.id.guideline_right_margin,
+                ConstraintSet.END
+            )
+            constraintSet.clear(R.id.food_name, ConstraintSet.START)
+            constraintSet.connect(
+                R.id.food_rating,
+                ConstraintSet.START,
+                R.id.guideline_left_margin,
+                ConstraintSet.START
+            )
+            constraintSet.clear(R.id.food_rating, ConstraintSet.END)
+            constraintSet.applyTo(constraintLayout)
+
+
             binding.foodListBinding = data
             binding.apply {
                 foodImage.layoutParams.height = Dimension.convertDpToPixels(190f, root.context)
@@ -69,14 +92,14 @@ class FoodListAdapter(private var list: MutableList<FoodListModel>?) :
                     seperator.visibility = View.VISIBLE
 
                 }
-                Glide.with(root.context).asBitmap().load(data.foodImage).dontAnimate()
-                    .into(foodImage)
+                Glide.with(root.context).load(data.foodImage).into(foodImage)
             }
             itemView.setOnClickListener {
                 listener?.onItemClickedWithImage(
                     data.foodName,
                     (binding.foodImage.drawable as BitmapDrawable).bitmap
                 )
+
 
             }
 

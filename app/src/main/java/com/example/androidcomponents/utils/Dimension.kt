@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.DisplayMetrics
 import android.util.TypedValue
 
- object Dimension {
+object Dimension {
     fun convertSpToPixels(sp: Float, context: Context): Int {
         return TypedValue.applyDimension(
             TypedValue.COMPLEX_UNIT_SP,
@@ -20,7 +20,8 @@ import android.util.TypedValue
             context.resources.displayMetrics
         ).toInt()
     }
-     fun getDisplaySize(context: Context): DisplayMetrics {
-         return context.resources.displayMetrics
-     }
+
+    fun getDisplaySize(context: Context): DisplayMetrics {
+        return context.resources.displayMetrics
+    }
 }

@@ -5,13 +5,13 @@ import com.android.volley.NetworkResponse
 import com.android.volley.Response
 import com.android.volley.VolleyError
 import com.android.volley.toolbox.JsonObjectRequest
-import com.example.androidcomponents.task.ListingTask
+import com.example.androidcomponents.task.EmployeeTask
 import org.json.JSONObject
 
 open class CustomJsonRequest(
     method: Int,
     url: String?,
-    listener: Response.Listener<JSONObject?>?,
+    listener: EmployeeTask,
     errorListener: Response.ErrorListener?
 ) : JsonObjectRequest(method,url.toString(),null, listener, errorListener) {
 

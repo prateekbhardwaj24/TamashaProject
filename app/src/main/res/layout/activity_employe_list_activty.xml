@@ -11,7 +11,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/bg_blue"
         tools:context=".ui.FoodListActivity">
+
         <com.facebook.shimmer.ShimmerFrameLayout
             android:id="@+id/shimmer_view_container"
             android:layout_width="match_parent"
@@ -43,6 +45,10 @@
                 <include layout="@layout/data_placeholder_layout" />
 
                 <include layout="@layout/data_placeholder_layout" />
+
+                <include layout="@layout/data_placeholder_layout" />
+
+                <include layout="@layout/data_placeholder_layout" />
             </LinearLayout>
 
         </com.facebook.shimmer.ShimmerFrameLayout>
@@ -51,11 +57,34 @@
             android:id="@+id/listRv"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/rv_item_food_list"
+            tools:listitem="@layout/rv_employe_item"
 
             />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/errorView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:cardCornerRadius="@dimen/radius_12"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/statusAndMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/size_18"
+                android:textAlignment="center"
+                android:textSize="@dimen/text_14"
+                android:textStyle="bold" />
+        </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

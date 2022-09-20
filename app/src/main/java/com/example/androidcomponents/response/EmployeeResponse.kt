@@ -74,6 +74,8 @@ class EmployeeResponse : BaseResponse {
     }
 
     fun getErrorMessage(): String? {
+        if (apiError == null)
+            apiError = "Please try again"
         return apiError
     }
 }
